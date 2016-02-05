@@ -1,3 +1,6 @@
+from gemini import GeminiQuery
+
+
 def var_is_rare(variant_data, threshold):
     """Check if variant is rare, as defined by the passed cutoff
     :param variant_data: A GeminiRow for a single variant.
@@ -80,3 +83,29 @@ def var_in_gene(variant_data, genes):
         return True
     else:
         return False
+
+
+def gemini_query(db):
+    """Execute a GEMINI Query
+    :param db: A GEMINI database name
+    :type db: str
+    :returns:  GeminiRow Results -- True or False.
+    """
+    query = "SELECT chrom, start, end, ref, alt, vcf_id, rs_ids, cosmic_ids, filter, qual, qual_depth, depth, " \
+            "type, sub_type, " \
+            "gene, transcript, exon, codon_change, aa_change, biotype, impact, impact_so, impact_severity, " \
+            "aa_length, is_lof, is_conserved, pfam_domain, in_omim, clinvar_sig, clinvar_disease_name, " \
+            "is_exonic, is_coding, is_splicing, " \
+            "clinvar_origin, clinvar_causal_allele, clinvar_dbsource, clinvar_dbsource_id, " \
+            "clinvar_on_diag_assay, rmsk, in_segdup, strand_bias, rms_map_qual, in_hom_run, num_mapq_zero, " \
+            "num_reads_w_dels, grc, gms_illumina, in_cse, num_alleles, allele_count, haplotype_score, " \
+            "is_somatic, somatic_score, aaf_esp_ea, aaf_esp_aa, aaf_esp_all, aaf_1kg_amr, " \
+            "aaf_1kg_eas, aaf_1kg_sas, aaf_1kg_afr, aaf_1kg_eur, aaf_1kg_all, aaf_exac_all, aaf_adj_exac_all, " \
+            "aaf_adj_exac_afr, aaf_adj_exac_amr, aaf_adj_exac_eas, aaf_adj_exac_fin, aaf_adj_exac_nfe, " \
+            "aaf_adj_exac_oth, aaf_adj_exac_sas, max_aaf_all, in_esp, in_1kg, in_exac, info," \
+            "(gts).(*), (gt_depths).(*), (gt_ref_depths).(*), (gt_alt_depths).(*) FROM variants"
+
+    gq = GeminiQuery(db)
+    gq.run(query)
+
+    return gq

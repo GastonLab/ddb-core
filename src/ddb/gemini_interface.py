@@ -106,6 +106,20 @@ def var_is_splicing(variant_data):
         return False
 
 
+def parse_rs_ids(variant_data):
+    if variant_data['rs_ids'] is not None:
+        return variant_data['rs_ids'].split(',')
+    else:
+        return []
+
+
+def parse_cosmic_ids(variant_data):
+    if variant_data['cosmic_ids'] is not None:
+        return variant_data['cosmic_ids'].split(',')
+    else:
+        return []
+
+
 def gemini_query(db):
     """Execute a GEMINI Query
     :param db: A GEMINI database name

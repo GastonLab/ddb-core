@@ -14,6 +14,7 @@ def parse_vcf(vcf_file, caller, caller_vcf_records):
                unicode(record.ALT[0]))
         caller_vcf_records[caller][key] = record
 
+
 def parse_mutect_vcf_record(record):
     info = {'FILTER': str(record.FILTER),
             'GTF_DP': str(record.gt_depths[0]),

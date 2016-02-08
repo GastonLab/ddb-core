@@ -85,6 +85,27 @@ def var_in_gene(variant_data, genes):
         return False
 
 
+def var_is_lof(variant_data):
+    if variant_data['is_lof']:
+        return True
+    else:
+        return False
+
+
+def var_is_coding(variant_data):
+    if variant_data['is_coding']:
+        return True
+    else:
+        return False
+
+
+def var_is_splicing(variant_data):
+    if variant_data['is_splicing']:
+        return True
+    else:
+        return False
+
+
 def gemini_query(db):
     """Execute a GEMINI Query
     :param db: A GEMINI database name

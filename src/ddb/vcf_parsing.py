@@ -120,3 +120,122 @@ def parse_scalpel_vcf_record(record):
             'GTF_AD': str(record.gt_alt_depths[0])}
 
     return info
+
+
+def var_is_rare(variant_data, threshold):
+    """Check if variant is rare, as defined by the passed cutoff
+    :param variant_data: A GeminiRow for a single variant.
+    :type variant_data: GeminiRow.
+    :param threshold: Allele frequency rarity threshold.
+    :type threshold: float.
+    :returns:  bool -- True or False.
+    """
+
+    if variant_data.INFO.get('in_esp') != 0 or variant_data.INFO.get('in_1kg') != 0 or variant_data.INFO.get('in_exac') != 0:
+        if variant_data.INFO.get('max_aaf_all') > threshold:
+            return False
+        else:
+            return True
+    else:
+        return True
+
+
+def var_is_in_cosmic(variant_data):
+    """Check if variant is in the COSMIC database
+    :param variant_data: A GeminiRow for a single variant.
+    :type variant_data: GeminiRow.
+    :returns:  bool -- True or False.
+    """
+
+    if variant_data.INFO.get('cosmic_ids') is not None:
+        return True
+    else:
+        return False
+
+
+def var_is_in_clinvar(variant_data):
+    """Check if variant is in the ClinVar database
+    :param variant_data: A GeminiRow for a single variant.
+    :type variant_data: GeminiRow.
+    :returns:  bool -- True or False.
+    """
+
+    if variant_data.INFO.get('clinvar_sig') is not None:
+        return True
+    else:
+        return False
+
+
+def var_is_pathogenic(variant_data):
+    """Check if variant is listed as pathogenic in ClinVar
+    :param variant_data: A GeminiRow for a single variant.
+    :type variant_data: GeminiRow.
+    :returns:  bool -- True or False.
+    """
+
+    if variant_data.INFO.get('clinvar_sig') is not None:
+        if "pathogenic" in variant_data.INFO.get('clinvar_sig'):
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+def var_is_protein_effecting(variant_data):
+    """Check if variant has a MED or HIGH impact
+    :param variant_data: A GeminiRow for a single variant.
+    :type variant_data: GeminiRow.
+    :returns:  bool -- True or False.
+    """
+    if variant_data.INFO.get('impact_severity') != "LOW":
+        return True
+    else:
+        return False
+
+
+def var_in_gene(variant_data, genes):
+    """Check if variant has a gene name associated with it
+    :param variant_data: A GeminiRow for a single variant.
+    :type variant_data: GeminiRow.
+    :returns:  bool -- True or False.
+    """
+    if variant_data.INFO.get('gene') in genes:
+        return True
+    else:
+        return False
+
+
+def var_is_lof(variant_data):
+    if variant_data.INFO.get('is_lof'):
+        return True
+    else:
+        return False
+
+
+def var_is_coding(variant_data):
+    if variant_data.INFO.get('is_coding'):
+        return True
+    else:
+        return False
+
+
+def var_is_splicing(variant_data):
+    if variant_data.INFO.get('is_splicing'):
+        return True
+    else:
+        return False
+
+
+def parse_rs_ids(variant_data):
+    if variant_data.INFO.get('rs_ids') is not None:
+        return variant_data.INFO.get('rs_ids').split(',')
+    else:
+        return []
+
+
+def parse_cosmic_ids(variant_data):
+    if variant_data.INFO.get('cosmic_ids') is not None:
+        return variant_data.INFO.get('cosmic_ids').split(',')
+    else:
+        return []

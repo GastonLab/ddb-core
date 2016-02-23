@@ -1,5 +1,14 @@
 import sys
 from cyvcf2 import VCF
+from collections import defaultdict
+
+
+def parse_caller_vcfs(sample_dict, caller_list):
+    caller_vcf_records = defaultdict(lambda: dict())
+    for caller in caller_list:
+        parse_vcf(sample_dict[caller], caller, caller_vcf_records)
+
+    return caller_vcf_records
 
 
 def parse_vcf(vcf_file, caller, caller_vcf_records):

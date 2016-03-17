@@ -68,7 +68,9 @@ Installation
 
 ::
 
-    pip install ddb-core
+git clone https://github.com/dgaston/ddb-core
+cd ddb-core
+python setup.py install
 
 Documentation
 =============

@@ -131,6 +131,48 @@ def parse_scalpel_vcf_record(record):
     return info
 
 
+def parse_platypus_vcf_record(record):
+    info = {'FR': str(record.INFO.get('FR')),
+            'MMLQ': str(record.INFO.get('MMLQ')),
+            'TCR': str(record.INFO.get('TCR')),
+            'HP': str(record.INFO.get('HP')),
+            'WE': str(record.INFO.get('WE')),
+            'WS': str(record.INFO.get('WS')),
+            'FS': str(record.INFO.get('FS')),
+            'TR': str(record.INFO.get('TR')),
+            'NF': str(record.INFO.get('NF')),
+            'TCF': str(record.INFO.get('TCF')),
+            'NR': str(record.INFO.get('NR')),
+            'TC': str(record.INFO.get('TC')),
+            'END': str(record.INFO.get('END')),
+            'MGOF': str(record.INFO.get('MGOF')),
+            'SbPval': str(record.INFO.get('SbPval')),
+            'START': str(record.INFO.get('START')),
+            'ReadPosRankSum': str(record.INFO.get('ReadPosRankSum')),
+            'MQ': str(record.INFO.get('MQ')),
+            'QD': str(record.INFO.get('QD')),
+            'SC': str(record.INFO.get('SC')),
+            'BRF': str(record.INFO.get('BRF')),
+            'HapScore': str(record.INFO.get('HapScore')),
+            'FILTER': str(record.FILTER),
+            'GTF_DP': str(record.gt_depths[0]),
+            'GTF_AD': str(record.gt_alt_depths[0])}
+
+    return info
+
+
+def parse_pindel_vcf_record(record):
+    info = {'END': str(record.INFO.get('END')),
+            'HOMLEN': str(record.INFO.get('HOMLEN')),
+            'HOMSEQ': str(record.INFO.get('HOMSEQ')),
+            'SVLEN': str(record.INFO.get('SVLEN')),
+            'SVTYPE': str(record.INFO.get('SVTYPE')),
+            'NTLEN': str(record.INFO.get('NTLEN')),
+            'FILTER': str(record.FILTER)}
+
+    return info
+
+
 def var_is_rare(variant_data, threshold):
     """Check if variant is rare, as defined by the passed cutoff
     :param variant_data: A GeminiRow for a single variant.

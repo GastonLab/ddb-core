@@ -154,9 +154,7 @@ def parse_platypus_vcf_record(record):
             'SC': str(record.INFO.get('SC')),
             'BRF': str(record.INFO.get('BRF')),
             'HapScore': str(record.INFO.get('HapScore')),
-            'FILTER': str(record.FILTER),
-            'GTF_DP': str(record.gt_depths[0]),
-            'GTF_AD': str(record.gt_alt_depths[0])}
+            'FILTER': str(record.FILTER)}
 
     return info
 

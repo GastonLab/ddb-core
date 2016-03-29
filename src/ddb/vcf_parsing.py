@@ -27,7 +27,8 @@ def parse_vcf(vcf_file, caller, caller_vcf_records):
 def parse_mutect_vcf_record(record):
     info = {'FILTER': str(record.FILTER),
             'GTF_DP': str(record.gt_depths[0]),
-            'GTF_AD': str(record.gt_alt_depths[0])}
+            'GTF_AD': str(record.gt_alt_depths[0]),
+            'AAF': record.gt_alt_depths[0] / record.gt_depths[0]}
 
     return info
 
@@ -61,7 +62,8 @@ def parse_vardict_vcf_record(record):
             'HICNT': str(record.INFO.get('HICNT')),
             'HICOV': str(record.INFO.get('HICOV')),
             'GTF_DP': str(record.gt_depths[0]),
-            'GTF_AD': str(record.gt_alt_depths[0])}
+            'GTF_AD': str(record.gt_alt_depths[0]),
+            'AAF': record.gt_alt_depths[0] / record.gt_depths[0]}
 
     return info
 
@@ -106,7 +108,8 @@ def parse_freebayes_vcf_record(record):
             'MQMR': str(record.INFO.get('MQMR')),
             'PAIRED': str(record.INFO.get('PAIRED')),
             'PAIREDR': str(record.INFO.get('PAIREDR')),
-            'GTF_DP': str(record.gt_depths[0])}
+            'GTF_DP': str(record.gt_depths[0]),
+            'AAF': record.INFO.get('AO') / record.gt_depths[0]}
 
     return info
 
@@ -126,7 +129,8 @@ def parse_scalpel_vcf_record(record):
             'SOMATIC': str(record.INFO.get('SOMATIC')),
             'DENOVO': str(record.INFO.get('DENOVO')),
             'GTF_DP': str(record.gt_depths[0]),
-            'GTF_AD': str(record.gt_alt_depths[0])}
+            'GTF_AD': str(record.gt_alt_depths[0]),
+            'AAF': record.gt_alt_depths[0] / record.gt_depths[0]}
 
     return info
 
@@ -154,7 +158,8 @@ def parse_platypus_vcf_record(record):
             'SC': str(record.INFO.get('SC')),
             'BRF': str(record.INFO.get('BRF')),
             'HapScore': str(record.INFO.get('HapScore')),
-            'FILTER': str(record.FILTER)}
+            'FILTER': str(record.FILTER),
+            'AAF': record.INFO.get('TR') / record.INFO.get('TC')}
 
     return info
 

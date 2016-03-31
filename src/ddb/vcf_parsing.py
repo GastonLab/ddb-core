@@ -25,9 +25,13 @@ def parse_vcf(vcf_file, caller, caller_vcf_records):
 
 
 def parse_mutect_vcf_record(record):
+    bq = record.format('BQ', float)
+    fa = record.format('FA', float)
     info = {'FILTER': str(record.FILTER),
             'GTF_DP': str(record.gt_depths[0]),
             'GTF_AD': str(record.gt_alt_depths[0]),
+            'BQ': str(bq[0]),
+            'FA': str(fa[0]),
             'AAF': record.gt_alt_depths[0] / record.gt_depths[0]}
 
     return info
@@ -136,6 +140,7 @@ def parse_scalpel_vcf_record(record):
 
 
 def parse_platypus_vcf_record(record):
+    nv = record.format('NV', float)
     info = {'FR': str(record.INFO.get('FR')),
             'MMLQ': str(record.INFO.get('MMLQ')),
             'TCR': str(record.INFO.get('TCR')),
@@ -159,18 +164,23 @@ def parse_platypus_vcf_record(record):
             'BRF': str(record.INFO.get('BRF')),
             'HapScore': str(record.INFO.get('HapScore')),
             'FILTER': str(record.FILTER),
+            'NV': str(nv[0]),
             'AAF': record.INFO.get('TR') / record.INFO.get('TC')}
 
     return info
 
 
 def parse_pindel_vcf_record(record):
+    rd = record.format('RD', float)
+    ad = record.format('AD', float)
     info = {'END': str(record.INFO.get('END')),
             'HOMLEN': str(record.INFO.get('HOMLEN')),
             'HOMSEQ': str(record.INFO.get('HOMSEQ')),
             'SVLEN': str(record.INFO.get('SVLEN')),
             'SVTYPE': str(record.INFO.get('SVTYPE')),
             'NTLEN': str(record.INFO.get('NTLEN')),
+            'GTF_DP': str(rd[0] + ad[0]),
+            'GTF_AD': str(ad[0]),
             'FILTER': str(record.FILTER)}
 
     return info

@@ -181,6 +181,7 @@ def parse_pindel_vcf_record(record):
             'NTLEN': str(record.INFO.get('NTLEN')),
             'GTF_DP': str(rd[0] + ad[0]),
             'GTF_AD': str(ad[0]),
+            'AAF': ad[0] / (rd[0] + ad[0]),
             'FILTER': str(record.FILTER)}
 
     return info

@@ -29,7 +29,8 @@ def parse_mutect_vcf_record(record):
     # bq = record.format('BQ', float)
     # fa = record.format('FA', float)
     # sys.stdout.write("Parsing non-format\n")
-    info = {'FILTER': str(record.FILTER),
+    info = {'DP': str(record.gt_depths[0]),
+            'FILTER': str(record.FILTER),
             'GTF_DP': str(record.gt_depths[0]),
             'GTF_AD': str(record.gt_alt_depths[0]),
             # 'BQ': str(bq[0]),
@@ -124,7 +125,8 @@ def parse_freebayes_vcf_record(record):
 
 def parse_scalpel_vcf_record(record):
     # sys.stdout.write("Parsing Scalpel\n")
-    info = {'AVGCOV': str(record.INFO.get('AVGCOV')),
+    info = {'DP': str(record.gt_depths[0]),
+            'AVGCOV': str(record.INFO.get('AVGCOV')),
             'MINCOV': str(record.INFO.get('MINCOV')),
             'ALTCOV': str(record.INFO.get('ALTCOV')),
             'COVRATIO': str(record.INFO.get('COVRATIO')),
@@ -148,7 +150,8 @@ def parse_platypus_vcf_record(record):
     # sys.stdout.write("Parsing Platypus\n")
     # nv = record.format('NV', float)
     # sys.stdout.write("Parsing non-info\n")
-    info = {'FR': str(record.INFO.get('FR')),
+    info = {'DP': str(record.INFO.get('TR')),
+            'FR': str(record.INFO.get('FR')),
             'MMLQ': str(record.INFO.get('MMLQ')),
             'TCR': str(record.INFO.get('TCR')),
             'HP': str(record.INFO.get('HP')),

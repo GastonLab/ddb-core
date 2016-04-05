@@ -34,7 +34,7 @@ def parse_mutect_vcf_record(record):
             'GTF_AD': str(record.gt_alt_depths[0]),
             # 'BQ': str(bq[0]),
             # 'FA': str(fa[0]),
-            'AAF': str(record.gt_alt_depths[0] / record.gt_depths[0])}
+            'AAF': str(float(record.gt_alt_depths[0]) / float(record.gt_depths[0]))}
 
     return info
 
@@ -70,7 +70,7 @@ def parse_vardict_vcf_record(record):
             'HICOV': str(record.INFO.get('HICOV')),
             'GTF_DP': str(record.gt_depths[0]),
             'GTF_AD': str(record.gt_alt_depths[0]),
-            'AAF': str(record.gt_alt_depths[0] / record.gt_depths[0])}
+            'AAF': str(float(record.gt_alt_depths[0]) / float(record.gt_depths[0]))}
 
     return info
 
@@ -117,7 +117,7 @@ def parse_freebayes_vcf_record(record):
             'PAIRED': str(record.INFO.get('PAIRED')),
             'PAIREDR': str(record.INFO.get('PAIREDR')),
             'GTF_DP': str(record.gt_depths[0]),
-            'AAF': str(record.INFO.get('AO') / record.gt_depths[0])}
+            'AAF': str(float(record.INFO.get('AO')) / float(record.gt_depths[0]))}
 
     return info
 
@@ -139,7 +139,7 @@ def parse_scalpel_vcf_record(record):
             'DENOVO': str(record.INFO.get('DENOVO')),
             'GTF_DP': str(record.gt_depths[0]),
             'GTF_AD': str(record.gt_alt_depths[0]),
-            'AAF': str(record.gt_alt_depths[0] / record.gt_depths[0])}
+            'AAF': str(float(record.gt_alt_depths[0]) / float(record.gt_depths[0]))}
 
     return info
 
@@ -172,7 +172,7 @@ def parse_platypus_vcf_record(record):
             'HapScore': str(record.INFO.get('HapScore')),
             'FILTER': str(record.FILTER),
             # 'NV': str(nv[0]),
-            'AAF': str(record.INFO.get('TR') / record.INFO.get('TC'))}
+            'AAF': str(float(record.INFO.get('TR')) / float(record.INFO.get('TC')))}
 
     return info
 

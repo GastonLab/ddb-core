@@ -178,7 +178,7 @@ def parse_pindel_vcf_record(record):
             'SVTYPE': str(record.INFO.get('SVTYPE')),
             'NTLEN': str(record.INFO.get('NTLEN')),
             'GTF_DP': str(record.gt_depths[0]),
-            'GTF_AD': str(record.gt_alt_depths[1]),
+            'GTF_AD': str(record.gt_alt_depths[0]),
             'AAF': str(float(record.gt_alt_depths[0]) / float(record.gt_depths[0])),
             'FILTER': str(record.FILTER)}
 

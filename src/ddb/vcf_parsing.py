@@ -171,7 +171,8 @@ def parse_platypus_vcf_record(record):
 
 
 def parse_pindel_vcf_record(record):
-    info = {'END': str(record.INFO.get('END')),
+    info = {'DP': str(record.gt_depths[0]),
+            'END': str(record.INFO.get('END')),
             'HOMLEN': str(record.INFO.get('HOMLEN')),
             'HOMSEQ': str(record.INFO.get('HOMSEQ')),
             'SVLEN': str(record.INFO.get('SVLEN')),

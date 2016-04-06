@@ -25,10 +25,6 @@ def parse_vcf(vcf_file, caller, caller_vcf_records):
 
 
 def parse_mutect_vcf_record(record):
-    # sys.stdout.write("Parsing MuTect\n")
-    # bq = record.format('BQ', float)
-    # fa = record.format('FA', float)
-    # sys.stdout.write("Parsing non-format\n")
     info = {'DP': str(record.gt_depths[0]),
             'FILTER': str(record.FILTER),
             'GTF_DP': str(record.gt_depths[0]),
@@ -41,7 +37,6 @@ def parse_mutect_vcf_record(record):
 
 
 def parse_vardict_vcf_record(record):
-    # sys.stdout.write("Parsing VarDict\n")
     info = {'DP': str(record.INFO.get('DP')),
             'VD': str(record.INFO.get('VD')),
             'AF': str(record.INFO.get('AF')),
@@ -77,7 +72,6 @@ def parse_vardict_vcf_record(record):
 
 
 def parse_freebayes_vcf_record(record):
-    # sys.stdout.write("Parsing FreeBayes\n")
     info = {'DP': str(record.INFO.get('DP')),
             'AF': str(record.INFO.get('AF')),
             'FILTER': str(record.FILTER),
@@ -124,7 +118,6 @@ def parse_freebayes_vcf_record(record):
 
 
 def parse_scalpel_vcf_record(record):
-    # sys.stdout.write("Parsing Scalpel\n")
     info = {'DP': str(record.gt_depths[0]),
             'AVGCOV': str(record.INFO.get('AVGCOV')),
             'MINCOV': str(record.INFO.get('MINCOV')),
@@ -147,9 +140,6 @@ def parse_scalpel_vcf_record(record):
 
 
 def parse_platypus_vcf_record(record):
-    # sys.stdout.write("Parsing Platypus\n")
-    # nv = record.format('NV', float)
-    # sys.stdout.write("Parsing non-info\n")
     info = {'DP': str(record.INFO.get('TR')),
             'FR': str(record.INFO.get('FR')),
             'MMLQ': str(record.INFO.get('MMLQ')),
@@ -181,19 +171,15 @@ def parse_platypus_vcf_record(record):
 
 
 def parse_pindel_vcf_record(record):
-    # sys.stdout.write("Parsing Pindel\n")
-    # rd = record.format('RD', float)
-    # ad = record.format('AD', float)
-    # sys.stdout.write("Parsing non-info\n")
     info = {'END': str(record.INFO.get('END')),
             'HOMLEN': str(record.INFO.get('HOMLEN')),
             'HOMSEQ': str(record.INFO.get('HOMSEQ')),
             'SVLEN': str(record.INFO.get('SVLEN')),
             'SVTYPE': str(record.INFO.get('SVTYPE')),
             'NTLEN': str(record.INFO.get('NTLEN')),
-            # 'GTF_DP': str(rd[0] + ad[0]),
-            # 'GTF_AD': str(ad[0]),
-            'AAF': "-1",
+            'GTF_DP': str(record.gt_depths[0]),
+            'GTF_AD': str(record.gt_alt_depths[1]),
+            'AAF': str(float(record.gt_alt_depths[0]) / float(record.gt_depths[0])),
             'FILTER': str(record.FILTER)}
 
     return info

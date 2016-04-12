@@ -140,6 +140,12 @@ def parse_scalpel_vcf_record(record):
 
 
 def parse_platypus_vcf_record(record):
+    try:
+        aaf = str(float(record.INFO.get('TR')) / float(record.INFO.get('TC')))
+    except TypeError:
+        print record.INFO.get('TR')
+        print record.INFO.get('TC')
+
     info = {'DP': str(record.INFO.get('TR')),
             'FR': str(record.INFO.get('FR')),
             'MMLQ': str(record.INFO.get('MMLQ')),
@@ -165,7 +171,7 @@ def parse_platypus_vcf_record(record):
             'HapScore': str(record.INFO.get('HapScore')),
             'FILTER': str(record.FILTER),
             # 'NV': str(nv[0]),
-            'AAF': str(float(record.INFO.get('TR')[0]) / float(record.INFO.get('TC')))}
+            'AAF': str(float(record.INFO.get('TR')) / float(record.INFO.get('TC')))}
 
     return info
 

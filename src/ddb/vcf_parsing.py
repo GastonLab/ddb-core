@@ -165,7 +165,7 @@ def parse_platypus_vcf_record(record):
             'HapScore': str(record.INFO.get('HapScore')),
             'FILTER': str(record.FILTER),
             # 'NV': str(nv[0]),
-            'AAF': str(float(record.INFO.get('TR')) / float(record.INFO.get('TC')))}
+            'AAF': str(float(record.INFO.get('TR')[0]) / float(record.INFO.get('TC')))}
 
     return info
 

@@ -25,12 +25,16 @@ def parse_vcf(vcf_file, caller, caller_vcf_records):
 
 
 def parse_mutect_vcf_record(record):
-    info = {'DP': str(record.gt_depths[0]),
+    # Pseudocount. Encountered a division by zero issue in at least one mutect record
+    depth = int(record.gt_depths[0])
+    if depth < 1:
+        depth = 1
+    info = {'DP': str(depth),
             'FILTER': str(record.FILTER),
             'GTF_DP': str(record.gt_depths[0]),
             'GTF_AD': str(record.gt_alt_depths[0]),
             'MULTIALLELIC': str(record.INFO.get('OLD_MULTIALLELIC')) or None,
-            'AAF': str(float(record.gt_alt_depths[0]) / float(record.gt_depths[0]))}
+            'AAF': str(float(record.gt_alt_depths[0]) / float(depth))}
 
     return info
 

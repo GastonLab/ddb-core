@@ -149,7 +149,7 @@ def parse_platypus_vcf_record(record):
     else:
         tr = record.INFO.get('TR')
 
-    info = {'DP': str(record.INFO.get('TR')),
+    info = {'DP': str(tr),
             'FR': str(record.INFO.get('FR')),
             'MMLQ': str(record.INFO.get('MMLQ')),
             'TCR': str(record.INFO.get('TCR')),

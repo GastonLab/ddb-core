@@ -29,8 +29,7 @@ def parse_mutect_vcf_record(record):
             'FILTER': str(record.FILTER),
             'GTF_DP': str(record.gt_depths[0]),
             'GTF_AD': str(record.gt_alt_depths[0]),
-            # 'BQ': str(bq[0]),
-            # 'FA': str(fa[0]),
+            'MULTIALLELIC': str(record.INFO.get('OLD_MULTIALLELIC')) or None,
             'AAF': str(float(record.gt_alt_depths[0]) / float(record.gt_depths[0]))}
 
     return info
@@ -66,6 +65,7 @@ def parse_vardict_vcf_record(record):
             'HICOV': str(record.INFO.get('HICOV')),
             'GTF_DP': str(record.gt_depths[0]),
             'GTF_AD': str(record.gt_alt_depths[0]),
+            'MULTIALLELIC': str(record.INFO.get('OLD_MULTIALLELIC')) or None,
             'AAF': str(float(record.gt_alt_depths[0]) / float(record.gt_depths[0]))}
 
     return info
@@ -112,6 +112,7 @@ def parse_freebayes_vcf_record(record):
             'PAIRED': str(record.INFO.get('PAIRED')),
             'PAIREDR': str(record.INFO.get('PAIREDR')),
             'GTF_DP': str(record.gt_depths[0]),
+            'MULTIALLELIC': str(record.INFO.get('OLD_MULTIALLELIC')) or None,
             'AAF': str(float(record.INFO.get('AO')) / float(record.gt_depths[0]))}
 
     return info
@@ -134,17 +135,19 @@ def parse_scalpel_vcf_record(record):
             'DENOVO': str(record.INFO.get('DENOVO')),
             'GTF_DP': str(record.gt_depths[0]),
             'GTF_AD': str(record.gt_alt_depths[0]),
+            'MULTIALLELIC': str(record.INFO.get('OLD_MULTIALLELIC')) or None,
             'AAF': str(float(record.gt_alt_depths[0]) / float(record.gt_depths[0]))}
 
     return info
 
 
 def parse_platypus_vcf_record(record):
-    try:
-        aaf = str(float(record.INFO.get('TR')) / float(record.INFO.get('TC')))
-    except TypeError:
-        print record.INFO.get('TR')
-        print record.INFO.get('TC')
+
+    multi_allelic = record.INFO.get('OLD_MULTIALLELIC') or False
+    if multi_allelic:
+        tr = record.INFO.get('TR')[0]
+    else:
+        tr = record.INFO.get('TR')
 
     info = {'DP': str(record.INFO.get('TR')),
             'FR': str(record.INFO.get('FR')),
@@ -170,8 +173,8 @@ def parse_platypus_vcf_record(record):
             'BRF': str(record.INFO.get('BRF')),
             'HapScore': str(record.INFO.get('HapScore')),
             'FILTER': str(record.FILTER),
-            # 'NV': str(nv[0]),
-            'AAF': str(float(record.INFO.get('TR')) / float(record.INFO.get('TC')))}
+            'MULTIALLELIC': str(record.INFO.get('OLD_MULTIALLELIC')) or None,
+            'AAF': str(float(tr) / float(record.INFO.get('TC')))}
 
     return info
 
@@ -187,7 +190,8 @@ def parse_pindel_vcf_record(record):
             'GTF_DP': str(record.gt_depths[0]),
             'GTF_AD': str(record.gt_alt_depths[0]),
             'AAF': str(float(record.gt_alt_depths[0]) / float(record.gt_depths[0])),
-            'FILTER': str(record.FILTER)}
+            'FILTER': str(record.FILTER),
+            'MULTIALLELIC': str(record.INFO.get('OLD_MULTIALLELIC')) or None}
 
     return info
 

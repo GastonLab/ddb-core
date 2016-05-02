@@ -148,10 +148,16 @@ def parse_scalpel_vcf_record(record):
 def parse_platypus_vcf_record(record):
 
     multi_allelic = record.INFO.get('OLD_MULTIALLELIC') or False
+
     if multi_allelic:
         tr = record.INFO.get('TR')[0]
     else:
         tr = record.INFO.get('TR')
+
+    if float(record.INFO.get('TC')) < 1:
+        aaf = "0"
+    else:
+        aaf = str(float(tr) / float(record.INFO.get('TC')))
 
     info = {'DP': str(tr),
             'FR': str(record.INFO.get('FR')),
@@ -161,7 +167,7 @@ def parse_platypus_vcf_record(record):
             'WE': str(record.INFO.get('WE')),
             'WS': str(record.INFO.get('WS')),
             'FS': str(record.INFO.get('FS')),
-            'TR': str(record.INFO.get('TR')),
+            'TR': str(tr),
             'NF': str(record.INFO.get('NF')),
             'TCF': str(record.INFO.get('TCF')),
             'NR': str(record.INFO.get('NR')),
@@ -178,7 +184,7 @@ def parse_platypus_vcf_record(record):
             'HapScore': str(record.INFO.get('HapScore')),
             'FILTER': str(record.FILTER),
             'MULTIALLELIC': str(record.INFO.get('OLD_MULTIALLELIC')) or None,
-            'AAF': str(float(tr) / float(record.INFO.get('TC')))}
+            'AAF': aaf}
 
     return info
 

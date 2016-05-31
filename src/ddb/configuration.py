@@ -69,7 +69,8 @@ def configure_samples(infile, configuration):
             sample_dict[option] = config.get(sample, option)
 
         if 'regions' not in sample_dict.keys():
-            sample_dict['regions'] = configuration['regions']
+            if 'regions' in configuration:
+                sample_dict['regions'] = configuration['regions']
         if 'snv_regions' not in sample_dict.keys():
             if 'snv_regions' in configuration:
                 sample_dict['snv_regions'] = configuration['snv_regions']
@@ -77,7 +78,8 @@ def configure_samples(infile, configuration):
             if 'indel_regions' in configuration:
                 sample_dict['indel_regions'] = configuration['indel_regions']
         if 'vcfanno_config' not in sample_dict.keys():
-            sample_dict['vcfanno_config'] = configuration['vcfanno']['conf']
+            if 'vcfanno_config' in configuration:
+                sample_dict['vcfanno_config'] = configuration['vcfanno']['conf']
 
         samples[sample] = sample_dict
 

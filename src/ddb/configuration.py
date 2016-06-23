@@ -78,7 +78,7 @@ def configure_samples(infile, configuration):
             if 'indel_regions' in configuration:
                 sample_dict['indel_regions'] = configuration['indel_regions']
         if 'vcfanno_config' not in sample_dict.keys():
-            if 'vcfanno_config' in configuration:
+            if 'vcfanno' in configuration:
                 sample_dict['vcfanno_config'] = configuration['vcfanno']['conf']
 
         samples[sample] = sample_dict

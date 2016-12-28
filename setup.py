@@ -31,7 +31,7 @@ setup(
         re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))
     ),
     author='Dan Gaston',
-    author_email='daniel.gaston@deaddriftbio.com',
+    author_email='daniel.gaston@gmail.com',
     url='https://github.com/dgaston/ddb-core',
     packages=find_packages('src'),
     package_dir={'': 'src'},

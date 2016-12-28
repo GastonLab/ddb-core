@@ -84,3 +84,18 @@ def configure_samples(infile, configuration):
         samples[sample] = sample_dict
 
     return samples
+
+
+def merge_library_configs_samples(libraries_config):
+    """Take library_level configurations from dual-lib experiments and merge to single samples
+    :param samples_config: configuration for individual library samples
+    :type samples_config: dictionary.
+    :returns:  dict -- A samples level configuration dictionary.
+    """
+
+    sample_dict = dict()
+
+    for library in libraries_config:
+        sample_dict[library['library_name']] = library
+
+    return sample_dict

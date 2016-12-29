@@ -96,6 +96,6 @@ def merge_library_configs_samples(libraries_config):
     sample_dict = defaultdict(dict)
 
     for library in libraries_config:
-        sample_dict[library['sample_name']][library['library_name']] = library
+        sample_dict[libraries_config[library]['sample_name']][libraries_config[library]['library_name']] = library
 
     return sample_dict

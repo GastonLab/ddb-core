@@ -93,9 +93,9 @@ def merge_library_configs_samples(libraries_config):
     :returns:  dict -- A samples level configuration dictionary.
     """
 
-    sample_dict = dict()
+    sample_dict = defaultdict(dict)
 
     for library in libraries_config:
-        sample_dict[library['library_name']] = library
+        sample_dict[library['sample_name']][library['library_name']] = library
 
     return sample_dict

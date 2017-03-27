@@ -98,6 +98,6 @@ def merge_library_configs_samples(libraries_config):
     for library in libraries_config:
         sample_dict[libraries_config[library]['sample_name']][libraries_config[library]['library_name']] = \
             libraries_config[library]
-        sample_dict[libraries_config[library]['sample_name']]['regions'] = libraries_config[library]['regions']
+        # sample_dict[libraries_config[library]['sample_name']]['regions'] = libraries_config[library]['regions']
 
     return sample_dict

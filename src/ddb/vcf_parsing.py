@@ -30,6 +30,7 @@ def parse_mutect_vcf_record(record):
     if depth < 1:
         depth = 1
     info = {'DP': str(depth),
+            'Alt_Depth': str(record.gt_alt_depths[0]),
             'FILTER': str(record.FILTER),
             'GTF_DP': str(record.gt_depths[0]),
             'GTF_AD': str(record.gt_alt_depths[0]),
@@ -41,6 +42,7 @@ def parse_mutect_vcf_record(record):
 
 def parse_vardict_vcf_record(record):
     info = {'DP': str(record.INFO.get('DP')),
+            'Alt_Depth': str(record.gt_alt_depths[0]),
             'VD': str(record.INFO.get('VD')),
             'AF': str(record.INFO.get('AF')),
             'FILTER': str(record.FILTER),
@@ -77,6 +79,7 @@ def parse_vardict_vcf_record(record):
 
 def parse_freebayes_vcf_record(record):
     info = {'DP': str(record.INFO.get('DP')),
+            'Alt_Depth': str(float(record.INFO.get('AO'))),
             'AF': str(record.INFO.get('AF')),
             'FILTER': str(record.FILTER),
             'AC': str(record.INFO.get('AC')),
@@ -116,6 +119,7 @@ def parse_freebayes_vcf_record(record):
             'PAIRED': str(record.INFO.get('PAIRED')),
             'PAIREDR': str(record.INFO.get('PAIREDR')),
             'GTF_DP': str(record.gt_depths[0]),
+            'GTF_AD': str(float(record.INFO.get('AO'))),
             'MULTIALLELIC': str(record.INFO.get('OLD_MULTIALLELIC')) or None,
             'AAF': str(float(record.INFO.get('AO')) / float(record.gt_depths[0]))}
 
@@ -124,6 +128,7 @@ def parse_freebayes_vcf_record(record):
 
 def parse_scalpel_vcf_record(record):
     info = {'DP': str(record.gt_depths[0]),
+            'Alt_Depth': str(record.gt_alt_depths[0]),
             'AVGCOV': str(record.INFO.get('AVGCOV')),
             'MINCOV': str(record.INFO.get('MINCOV')),
             'ALTCOV': str(record.INFO.get('ALTCOV')),
@@ -160,6 +165,7 @@ def parse_platypus_vcf_record(record):
         aaf = str(float(tr) / float(record.INFO.get('TC')))
 
     info = {'DP': str(tr),
+            'Alt_Depth': tr,
             'FR': str(record.INFO.get('FR')),
             'MMLQ': str(record.INFO.get('MMLQ')),
             'TCR': str(record.INFO.get('TCR')),
@@ -191,6 +197,7 @@ def parse_platypus_vcf_record(record):
 
 def parse_pindel_vcf_record(record):
     info = {'DP': str(record.gt_depths[0]),
+            'Alt_Depth': str(record.gt_alt_depths[0]),
             'END': str(record.INFO.get('END')),
             'HOMLEN': str(record.INFO.get('HOMLEN')),
             'HOMSEQ': str(record.INFO.get('HOMSEQ')),
